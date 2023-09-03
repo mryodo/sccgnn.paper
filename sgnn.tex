@@ -1,0 +1,161 @@
+\documentclass{mynotes}
+
+\usepackage{lipsum}
+
+\input{shortcuts}
+
+\hfuzz=106.002pt %suppress annoying overflows
+
+
+\title{ SCCGNN: any ideas? }
+
+\author[1]{Anton Savostianov}
+\author[1]{Francesco Tudisco}
+\author[1]{Nicola Guglielmi}
+
+\affil[1]{Gran Sasso Science Institute, viale F.Crispi 7, L'Aquila, Italy, 67100, email: \email{anton.savostianov@gssi.it} }
+
+\abstract{
+      \lipsum[1]
+}
+
+\keywords{NNs}
+
+\linespread{1.15}
+
+\begin{document}
+\setlength{\abovedisplayskip}{3pt}
+\setlength{\belowdisplayskip}{3pt}
+
+      \maketitle
+
+\section{ Things }
+
+Let \( \mc K \) be a simplicial complex where \( \V k \) is the set of \(k\)-order simplices in \( \mc K \), \( \mc  K = \V 0 \cup \V 1 \cup \V 2 \cup \ldots\); let \( m_k = | \V k | \). Let \( B_k \in \mathrm{Mat}_{m_{k-1} \times m_k} \) be a \emph{boundary} operator mapping simplex of order \( k \) to its border of the order \( k - 1 \); by the fundamental lemma of topology \( B_k B_{k+1} = 0 \).
+
+Given the lemma above, the \emph{homology group} \( \mc H_k = \faktor{\im B_{k}}{\ker B_{k+1}} \) is correctly defined; the elements of \( \mc H_k \) correspond to \(k\)-dimensional holes in the simplicial complex \( \mc K \). Through the harmonic representative it is convenient to exploit the isomorphism:
+\begin{equation*}
+      \mc H_k \cong \ker \left( B_k^\top B_k + B_{k+1} B_{k+1}^\top \right)
+\end{equation*}
+Operators \( \Ld k = B_k^\top B_k \), \( \Lu k = B_{k+1} B_{k+1}^\top \) and \( L_k = \Ld k + \Lu k \) are referred as \(k-\)th order up-, down- and complete graph Laplacians.
+
+Algebra of boundary operators admits an important full space decomposition:
+\begin{lemma}[Hodge Decomposition, {\cite[Thm.~5.2]{limHodgeLaplaciansGraphs2019}}]\label{lem:hodge_decomp}
+      For the \(k\)-th order Hodge Laplacian \( L_k \in \ds R^{{m_k} \times {m_k}} \), the following decomposition holds:
+      \begin{equation*}
+            \ds R^{m_k} = \lefteqn{\overbrace{\phantom{\im B_k^\top \oplus  \ker L_k}}^{\ker B_{k+1}^\top}} \im B_k^\top \oplus
+            \underbrace{\ker L_k \oplus  \im B_{k+1}}_{\ker B_k}
+      \end{equation*}
+\end{lemma}
+
+We also assume the case of weighted simplicial complex; in such situations the family of \( k\) weight functions are introduced: \( w_k(\cdot) : \V k \mapsto (0; +\infty) \) with corresponding diagonal weight matrices \(W_k \in \mathrm{Mat}_{m_k \times m_k}\) where \( \left[ W_k \right]_{ii} = w_k(\sigma_i) \), \( \sigma_i \in \V k \). Then the weighting scheme preserving the homology definition can be designed as follows:
+\begin{equation*}
+      B_k \rightarrow W_{k-1}^{-1} B_k W_k
+\end{equation*}
+Weighting does not change the dimensionality of the homology group and the remaining terms in the decomposition; isomorhism and the decomposition above hold in the weighted case as well.
+
+
+\section{ SCCGNN }
+
+Let \( C_k \) be a formal linear space on \( \V k \).
+
+We consider a semi-supervised setting: we have the flow \( \b x \in C_1 \) with a share of missing values; the goal is to reconstruct the missing values (let \( \nu \) be the share of the missing values; missing entries in \( \b x \) are filled with the median value of the present values).
+
+Convolutional layer induced by the simplicial geometry is given by:
+\begin{equation*}
+      \b x_{n+1} = \sigma \left( \sum_{i=0}^K \alpha_i^{(n)} L_1^i \b x_n \right), \quad \text{ where } \sigma=\mathrm{reLU} \text{ and } \alpha_i^{(n)} \in \ds R
+\end{equation*}
+where \(\sigma ( x ) = x \cdot \chi(x) \). Note that \( L_1^i = \left( B_1^\top B_1 \right)^i + \left( B_2 B_2^\top \right)^i = {\Ld 1}^i + {\Lu 1}^i \); let \( P_K( \b \alpha, A ) = \sum_{i=0}^K \alpha_i A^i \) be a matrix polynomial. Then, the convolution layer can be rewritten as
+\begin{equation}
+      \b x_{n+1} = \sigma \left( \sum_{i=0}^K \alpha_i^{(n)} L_1^i \b x_n \right) = \sigma \left( P_K( \b \alpha^{(n)}, L_1) \b x_n \right) = \sigma \left( P_K( \b \alpha^{(n)}, \Ld 1) \b x_n + P_K( \b \alpha^{(n)}, \Lu 1) \b x_n  \right) 
+\end{equation}
+
+\begin{remark} 
+      Given the classical definition, the layer produces the output vector \( \b x_{n+1} \) as an element of the Krylov\todo{why do we need it? who knows} subspaces spanned by the input \( \b x_n \) baring the activation function:
+      \begin{equation*}
+            \b x_n = \sigma \left( \b y_n \right), \qquad \b y_n \in \mc K_K (L_1, \b x_n)
+      \end{equation*}
+\end{remark}
+
+In a more general case, one could consider unmatching layer with two independent polynomials:
+\begin{equation}
+      \b x_{n+1} = \sigma \left( P_K( \b \alpha^{(n)}, \Ld 1) \b x_n + Q_K( \b \beta^{(n)}, \Lu 1) \b x_n  \right) 
+\end{equation}
+Let us omit \( \b \alpha \) and \( \b \beta \) in the polynomial arguments for clarity (we will refer to the coefficients of \( P_K \) as \( \alpha_i \) and \( Q_k \) as \( \beta_i \) respectively).
+
+
+\section{Flow leakage}
+
+For the Hodge decomposition, \Cref{lem:hodge_decomp}, we define projectors on \( \im B_1^\top \) and \( \im B_2 \) as \( \Pi_1 = B_1^\top \left( B_1 B_1^\top \right)^+ B_1 \) and \( \Pi_2 = B_2 \left( B_2^\top B_2 \right)^+ B_2^\top  \) respectively\todo{note that one can use stochastic Cholesky and \texttt{HeCS} as fast projectors here}.
+
+Then 
+\begin{equation}
+      \begin{aligned}
+            \b x_{n+1} & =  \sigma \left( P_K( \b \alpha^{(n)}, \Ld 1) \b x_n + Q_K( \b \beta^{(n)}, \Lu 1) \b x_n  \right) = \\
+            & = \sigma \left( \gamma^{(n)} \b x_n + P_{K-1}(\Ld 1)  \Ld 1 \b x_n +Q_{K-1} (\Lu 1)  \Lu 1  \b x_n \right)
+      \end{aligned}
+\end{equation}
+Let \( \b x_n = \b y_n + \b h_n + \b z_n\) such that \( \b y_n \in \im B_1^\top \), \( \b z_n \in \im B_2 \) and \( \b h_n \in \ker L_1 \). Then:
+\begin{equation}
+      \b x_n = \sigma \left( \gamma^{(n)} \b h_n + \left[ \gamma^{(n)} I + P_{K-1}(\Ld 1) \Ld 1  \right]  \b y_n + \left[ \gamma^{(n)} I + Q_{K-1}(\Lu 1) \Lu 1  \right]  \b z_n \right)
+\end{equation}
+
+
+
+\begin{remark}[reLU action of the subspaces]
+
+      Let \( \b y  \in \im B_1^\top \); then \( \b y = B_1^\top \b x \). What can we say about \( \sigma (B_1^\top \b x ) \)? By the definition of the reLU:
+      \begin{equation}
+            B_1^\top \b x  = \sigma( B_1^\top \b x ) - \sigma( - B_1^\top \b x )
+      \end{equation}
+      Projecting both sides of this equation by mutiplying by \( \Pi_2 \) we get
+      \begin{equation}
+            \begin{aligned}
+                  & \Pi_2 \sigma (B_1^\top \b x ) = \Pi_2 \sigma ( - B_1^\top \b x ) \\
+                  & \Pi_H \sigma (B_1^\top \b x ) = \Pi_H \sigma ( - B_1^\top \b x )
+            \end{aligned}
+      \end{equation}
+\end{remark}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\vspace{50pt}
+
+      \nocite{*}
+      \bibliographystyle{alpha}
+      \bibliography{sgnn}
+
+\end{document}

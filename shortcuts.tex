@@ -1,0 +1,47 @@
+\usepackage{tikz-network}
+\usepackage{faktor}
+\usepackage{xfrac}
+
+
+%%%% COMMANDS %%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand*{\insidefigure}[3][0.5\columnwidth]{
+      \begin{center}
+            \begin{minipage}{#1}
+                  \centering
+                  #2
+                  \captionof{figure}{#3}
+            \end{minipage}
+      \end{center}
+}
+
+\newcommand*{\mc}[1]{\mathcal{#1}}
+\usepackage{bm}
+\renewcommand*{\b}[1]{\pmb{#1}}
+\newcommand*\eps{\varepsilon}
+\newcommand*{\V}[1]{ \mc V_{#1}(\mc K)}
+\newcommand*{\vn}{\varnothing}
+\newcommand*{\ord}[1]{\mathrm{ord}\,(#1)}
+
+\usepackage{dsfont}
+\newcommand*{\ds}[1]{\mathds{#1}}
+
+\newcommand*{\Lu}[1]{L_{#1}^{\uparrow}}
+\newcommand*{\Ld}[1]{L_{#1}^{\downarrow}}
+
+\newcommand*{\wh}[1]{\widehat{#1}}
+
+
+\renewcommand*{\bar}[1]{ \overline{#1} }
+
+
+\newcommand{\algname}{\texttt{HeCS}}
+
+
+\DeclareMathOperator{\im}{im}
+\let\span\relax
+\DeclareMathOperator{\span}{span}
+\DeclareMathOperator{\Sym}{Sym}
+
+
+
