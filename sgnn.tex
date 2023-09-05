@@ -52,16 +52,38 @@ We also assume the case of weighted simplicial complex; in such situations the f
 \begin{equation*}
       B_k \rightarrow W_{k-1}^{-1} B_k W_k
 \end{equation*}
-Weighting does not change the dimensionality of the homology group and the remaining terms in the decomposition; isomorhism and the decomposition above hold in the weighted case as well.
+Weighting does not change the dimensionality of the homology group and the remaining terms in the decomposition; isomorhism and the decomposition above hold in the weighted case as well.\todo{here we need a proper discussion of the normalisation properties in the general case}
 
 
 \section{ SCCGNN }
 
+
+\begin{comment}
 Let \( C_k \) be a formal linear space on \( \V k \).
 
-We consider a semi-supervised setting: we have the flow \( \b x \in C_1 \) with a share of missing values; the goal is to reconstruct the missing values (let \( \nu \) be the share of the missing values; missing entries in \( \b x \) are filled with the median value of the present values).
+We consider a semi-supervised setting\todo{I am not clear on terms: is it semi-supervised if not the dominant share of values is missing?}: we have the flow \( \b x \in C_1 \) with a share of missing values; the goal is to reconstruct the missing values (let \( \nu \) be the share of the missing values; missing entries in \( \b x \) are filled with the median\todo{or \( 0 \)} value of the present values).
+\end{comment}
 
-Convolutional layer induced by the simplicial geometry is given by:
+\paragraph{Graph Fourier Transform. }
+
+Let \( L \) be a graph Laplacian (of any order); then \( L_k \) is simmetric positive semidefinite and has a complete set of orthonormal eigenvectors \( U = [ \b u_1, \b u_2, \ldots \b u_n ]\), \( L_k = U \Lambda U^\top \). Then \emph{graph Fourier transform } of a simplicial signal \( \b x \in C_k \) is defined as \( \hat{ \b x } = U^\top \b x \)\todo{exactly the same as in the discrete Fourier transform with a different basis instead of \( e^{-2\pi i k / n }\)} and the convolution on graphs:
+\begin{equation}
+      \b x \star \b y = U \left(  \left( U^\top \b x \right)  \odot \left( U^\top \b y \right) \right) = U \diag \left( U^\top \b x \right) U^\top \b y
+\end{equation}
+
+Then graph filter \( g_\theta \) act as \( g_\theta ( L_k ) = U g_\theta ( \Lambda ) U^\top \); since \( g_\theta ( \Lambda ) \) is diagonal, every filter application \( g_\theta (L_k) \b x \) is a graph convolution. Hence, for each convolution of \( \b x \) with a kernel \( \b w \), one can find a graph filter
+\begin{equation}
+      \diag \left( U^\top \b w \right) = g_\theta ( \Lambda )
+\end{equation}
+Instead of the unpleasant and computationally demanding generic case of \( g_\theta (L_k) \), one can use approximations by the polynomial filters of a smaller degree\todo{ \( T_i \) are Chebyshev polynomials }:
+\begin{equation}
+      g_\theta (L_k ) \approx \sum_{i=0}^K \theta_i T_i ( \hat L_k ) \approx   \sum_{i=0}^K \alpha_i L_k^i
+\end{equation}
+
+
+\paragraph{ Convolutional Layers. }
+
+Let \( \b x_i \in C_1 \); then a convolutional layer induced by the simplicial geometry is given by:
 \begin{equation*}
       \b x_{n+1} = \sigma \left( \sum_{i=0}^K \alpha_i^{(n)} L_1^i \b x_n \right), \quad \text{ where } \sigma=\mathrm{reLU} \text{ and } \alpha_i^{(n)} \in \ds R
 \end{equation*}
@@ -69,20 +91,76 @@ where \(\sigma ( x ) = x \cdot \chi(x) \). Note that \( L_1^i = \left( B_1^\top 
 \begin{equation}
       \b x_{n+1} = \sigma \left( \sum_{i=0}^K \alpha_i^{(n)} L_1^i \b x_n \right) = \sigma \left( P_K( \b \alpha^{(n)}, L_1) \b x_n \right) = \sigma \left( P_K( \b \alpha^{(n)}, \Ld 1) \b x_n + P_K( \b \alpha^{(n)}, \Lu 1) \b x_n  \right) 
 \end{equation}
-
+\begin{comment}
 \begin{remark} 
       Given the classical definition, the layer produces the output vector \( \b x_{n+1} \) as an element of the Krylov\todo{why do we need it? who knows} subspaces spanned by the input \( \b x_n \) baring the activation function:
       \begin{equation*}
             \b x_n = \sigma \left( \b y_n \right), \qquad \b y_n \in \mc K_K (L_1, \b x_n)
       \end{equation*}
 \end{remark}
-
-In a more general case, one could consider unmatching layer with two independent polynomials:
+\end{comment}
+Equation above implies the same vector of polynomial coefficients for both up- and down-terms. In a more general case, one could consider a layer with two independent polynomials:
 \begin{equation}
       \b x_{n+1} = \sigma \left( P_K( \b \alpha^{(n)}, \Ld 1) \b x_n + Q_K( \b \beta^{(n)}, \Lu 1) \b x_n  \right) 
 \end{equation}
 Let us omit \( \b \alpha \) and \( \b \beta \) in the polynomial arguments for clarity (we will refer to the coefficients of \( P_K \) as \( \alpha_i \) and \( Q_k \) as \( \beta_i \) respectively).
 
+Assuming one can extend the dimension of the input for the hidden layers, \( \b x_n \in \ds R^{m_1 \times 1}\) and \( \b x_{n+1} \in \ds R^{m_1 \times H} \) and \( \alpha_i^{(n)}, \beta_i^{(n)} \in \ds R^{ 1 \times H } \)\todo{ the order of mutliplication changes, \( P_K(\b \alpha^{(n)}, L_1) \b x_n = \sum_{i=0}^K L_1^i \b x_n \alpha_i^{(n)}  \) }.
+
+
+\paragraph{ Training, Batching, Masking and the Task. }
+
+Let \( \b x \in C_1 \) be a given given flow on edges; we separate vector's entries into two parts --- \emph{missing} and \emph{complete}, \( \b x = [ \b x_c; \b x_m  ] \); the missing part of the vector is\todo{this is going to be a little shocking but bear with me} missing and is unavailible during training. Instead, we assume that the vector \( \b x \) that arrives as the input of SCCGNN is \( \b x = [\b x_c; \b x_m ]\) where \( \b x_m = \phi \) where \( \phi \) is a filler value for the missing entries, \emph{initial guess}. One may opt for  \( \phi = 0 \) or \( \phi = \mathrm{median}\, \left(  \b x_c \right) \).
+
+\begin{problem}
+      Train a SCCGNN \( f(\b x)\) composed of convolutional graph layers such that 
+      \begin{equation}
+            \left\| f(\b x) \mid_m - \b x_m  \right\| \to \min
+      \end{equation}
+      without exploiting values from \( \b x_m \).
+\end{problem}
+
+\begin{remark}[Batching and SGD without S]
+      By the nature of the task \( \b x \) maybe the only data point available; this implies that data points cannot be grouped into batches and the optimisation with SGD loses the stochasticity. 
+
+      Naturally, one may try to sample entries of \( \b x \) to form a batch, but this brute force idea contradicts the interconnected nature of the graph neural network. One can find a substantial discussion on the proper subsampling for GNNs (which normally mean subsampling vertices with their neighbours via specifically constructed distribution, in other words), but we propose the alternative batching and randomisation.
+
+      Since the network has the access only to the known entries \( \b x_c\), it should be train to maintain correct values on the known entries (e.g. by minimizing \( \| f(\b x )\mid_c - \b x_c \| \)) which has a global (but maybe not unique) optimum at \( f( \b x) = \b x \) (\emph{identity}). In order to avoid the trivial and incorrect sollution one may propose the following masking idea:
+      \begin{itemize}
+            \item let \( \b e = [ \b e_c; \b e_m] \) be a binary vector such that \( \b e_m = 0 \) and each entry of in the complete part be \( \sim \mathrm{Bernoulli} \left( p \right) \);
+            \item then \( \b x \odot \b e \) is a subsampling where we ``forget'' about some of the known entries;
+            \item let us train the network with a loss:
+            \begin{equation}
+                  \left\| f( \b x \odot \b e )\mid_c - \b x_c \right\|^2 
+            \end{equation}
+            so it avoids the identity and tries to keep the original known values intact;
+            \item then the epoch is naturally formed by \( 1/p \) steps (such that each entry of \( \b x_c \) enters the training).
+      \end{itemize}
+\end{remark}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{comment}
 
 \section{Flow leakage}
 
@@ -117,6 +195,7 @@ Let \( \b x_n = \b y_n + \b h_n + \b z_n\) such that \( \b y_n \in \im B_1^\top 
       \end{equation}
 \end{remark}
 
+\end{comment}
 
 
 

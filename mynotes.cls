@@ -355,6 +355,21 @@
       colupper=black4,
       }
 
+      \newtheorem{problem}{Problem}
+      \tcolorboxenvironment{problem}{
+      boxrule=0pt,
+      boxsep=0pt,
+      blanker,
+      borderline west={3pt}{0pt}{jet},
+      sharp corners,
+      before skip=10pt,
+      after skip=10pt,
+      left=5pt,
+      right=5pt,
+      breakable,
+      colupper=black4,
+      }
+
 % =========== Theorems ============ %
 % ================================= %
 
