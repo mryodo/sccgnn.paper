@@ -190,9 +190,60 @@ The accuracy on the missing value is measure by \texttt{r2score}:
 
 
 
-\paragraph{First results. } 123
+\section{ Flow leakage and First Experiments. } 
 
+\subsection{ Flow components in SCCGNN. }
 
+For the Hodge decomposition, \Cref{lem:hodge_decomp}, we define projectors on \( \im B_1^\top \) and \( \im B_2 \) as \( \Pi_1 = B_1^\top \left( B_1 B_1^\top \right)^+ B_1 \) and \( \Pi_2 = B_2 \left( B_2^\top B_2 \right)^+ B_2^\top  \) respectively\todo{note that one can use stochastic Cholesky and \texttt{HeCS} as fast projectors here}.
+
+Then 
+\begin{equation}
+      \begin{aligned}
+            \b x^{(n+1)} & =  \sigma \left( P_K( \b \alpha^{(n)}, \Ld 1) \b x^{(n)} + Q_K( \b \beta^{(n)}, \Lu 1) \b x^{(n)}  \right) = \\
+            & = \sigma \left( \gamma^{(n)} \b x^{(n)} + P_{K-1}(\Ld 1)  \Ld 1 \b x^{(n)} +Q_{K-1} (\Lu 1)  \Lu 1  \b x^{(n)} \right)
+      \end{aligned}
+\end{equation}
+Let \( \b x^{(n)} = \b y^{(n)} + \b h^{(n)} + \b z^{(n)}\) such that \( \b y^{(n)} \in \im B_1^\top \), \( \b z^{(n)} \in \im B_2 \) and \( \b h^{(n)} \in \ker L_1 \). Then:
+\begin{equation}
+      \b x^{(n+1)} = \sigma \left( \gamma^{(n)} \b h^{(n)} + \left[ \gamma^{(n)} I + P_{K-1}(\Ld 1) \Ld 1  \right]  \b y^{(n)} + \left[ \gamma^{(n)} I + Q_{K-1}(\Lu 1) \Lu 1  \right]  \b z^{(n)} \right)
+\end{equation}
+
+The last equation implies a certain structural problem in SCCGNN: the harmonic component \( \b h^{(n)}\) is ``underrepresented'' in the layer and is acted upon only by a constant \( \gamma^{(n)}\) and activation function\todo{formally, that's not true: the action of \( \sigma \) on \( \b y^{(n)}\) and \( \b z^{(n)} \) components has non-zero projections on \( \ker L_1 \). Nevertheless, it looks suspicious }. Let us investigate the behaviour for test settings.
+
+\subsection{ Follow the flow. }
+
+We consider the setting of SCCGNN described above; note that in this experiment the output of each layer never widens, so each layer receives and return a vector of the size \( m_1 \times 1 \). We initialize the parameters of the convolutional filters randomly; SCCGNN is trained till the loss falls under the threshold. We record the accuracy (in \( r^2 \) terms ) at the final point of training alongside with component-wise losses \( \frac{1}{m_1}\left\| \Pi_1 \left( f(\w x) - \b x \right) \right\|^2 \), \( \frac{1}{m_1}\left\| \Pi_2 \left( f(\w x) - \b x \right) \right\|^2 \) and \( \frac{1}{m_1}\left\| \Pi_{\ker L_1} \left( f(\w x) - \b x \right) \right\|^2 \).
+
+Both \Cref{fig:repeats_first_stable,fig:repeats_first_unstable} demonstrate final accuracies (on the left) and final component-wise losses (on the right) for several initialisations of SCCGNN in the case of topologically stable and unstable simplicial complexes \( \mc K \) correspondingly.
+\begin{figure}[htbp]
+      \vspace{-20pt}
+      \centering
+      \includegraphics*[width=0.9\columnwidth]{imgs/stop_time_stable_clean2_r2.pdf}\vspace{-10pt}
+      \caption{ 
+            Final accuracies (on the left) and component-wise losses (on the right) for 3-layer SCCGNN with cubic convolutional filter for several re-initializations. \( \mc K \) is Deluanay-based simplicial complex with a stable weight scheme.
+      \label{fig:repeats_first_stable}
+      }
+\end{figure}
+Final accuracies in neither stable nor unstable can be treated as particularly successfull ones (the optimal value of \( r^2\) metrics is \( 1 \)). However, the stable case significantly overperforms the unstable one in terms of the \(r^2\)-score whilst the training loss in all the cases is successfully reduced below the threshold.
+
+More interestingly, the component-wise losses demonstrate an accentuated order: the edge-vertex part of the flow (\( \im B_1^\top \)) is trained significantly better than both harmonic and triangular parts. Additionally, the difference between the stable and unstable cases lies in the ``order'' of losses: the unstable case has the harmonic loss as the worst one (which we could have expected) whilst the triangular component underperforms in the stable case which raises questions\todo{ I mean, \emph{more} questions}.
+\begin{figure}[htbp]
+      \vspace{-20pt}
+      \centering
+      \includegraphics*[width=0.9\columnwidth]{imgs/stop_time_unstable_clean2_r2.pdf}\vspace{-10pt}
+      \caption{ 
+            Final accuracies (on the left) and component-wise losses (on the right) for 3-layer SCCGNN with cubic convolutional filter for several re-initializations. \( \mc K \) is Deluanay-based simplicial complex with a unstable weight scheme.
+      \label{fig:repeats_first_unstable}
+      }
+\end{figure}
+
+\paragraph{ Quick remarks. }
+\begin{itemize}
+      \item we can try to mitigate the problem with overall accuracy by actually widening the output of the layer (so the weights would be not scalars, but matrices), like in \cite{ebliSimplicialNeuralNetworks2020};
+      \item \Cref{fig:repeats_first_stable,fig:repeats_first_unstable} imply that we may benefit from the component-wise loss for the training (where you can add weights to the components depending on the conditionality of the initial complex);
+      \item hypothetical switch to the component-wise loss would require fast projectors which seems to exploit our precious \texttt{HeCS} preconditioner and isn't is just the dream?
+      \item everything is weird and unstable.
+\end{itemize}
 
 
 
