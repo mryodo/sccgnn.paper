@@ -1,0 +1,76 @@
+@misc{ebliSimplicialNeuralNetworks2020,
+  title = {Simplicial {{Neural Networks}}},
+  author = {Ebli, Stefania and Defferrard, Micha{\"e}l and Spreemann, Gard},
+  year = {2020},
+  month = dec,
+  number = {arXiv:2010.03633},
+  eprint = {2010.03633},
+  primaryclass = {cs, math, stat},
+  publisher = {{arXiv}},
+  urldate = {2023-08-15},
+  abstract = {We present simplicial neural networks (SNNs), a generalization of graph neural networks to data that live on a class of topological spaces called simplicial complexes. These are natural multi-dimensional extensions of graphs that encode not only pairwise relationships but also higher-order interactions between vertices - allowing us to consider richer data, including vector fields and \$n\$-fold collaboration networks. We define an appropriate notion of convolution that we leverage to construct the desired convolutional neural networks. We test the SNNs on the task of imputing missing data on coauthorship complexes.},
+  archiveprefix = {arxiv},
+  keywords = {Computer Science - Machine Learning,Mathematics - Algebraic Topology,Statistics - Machine Learning},
+  file = {/Users/mryodo/Zotero/storage/9EDW8NTF/Ebli et al. - 2020 - Simplicial Neural Networks.pdf;/Users/mryodo/Zotero/storage/7F9PIGGI/2010.html}
+}
+
+@article{huBatchsizeSelectionStochastic2020,
+  title = {On {{Batch-size Selection}} for {{Stochastic Training}} for {{Graph Neural Networks}}},
+  author = {Hu, Yaochen and Levi, Amit and Kumar, Ishaan and Zhang, Yingxue and Coates, Mark},
+  year = {2020},
+  month = oct,
+  urldate = {2023-09-07},
+  abstract = {Batch size is an important hyper-parameter for training deep learning models with stochastic gradient decent (SGD) method, and it has great influence on the training time and model performance. We study the batch size selection problem for training graph neural network (GNN) with SGD method. To reduce the training time while keeping a decent model performance, we propose a metric that combining both the variance of gradients and compute time for each mini-batch. We theoretically analyze how batch-size influence such a metric and propose the formula to evaluate some rough range of optimal batch size. In GNN, gradients evaluated on samples in a mini-batch are not independent and it is challenging to evaluate the exact variance of gradients. To address the dependency, we analyze an estimator for gradients that considers the randomness arising from two consecutive layers in GNN, and suggest a guideline for picking the appropriate scale of the batch size. We complement our theoretical results with extensive empirical experiments for ClusterGCN, FastGCN and GraphSAINT on 4 datasets: Ogbn-products, Ogbn-arxiv, Reddit and Pubmed. We demonstrate that in contrast to conventional deep learning models, GNNs benefit from large batch sizes.},
+  langid = {english},
+  file = {/Users/mryodo/Zotero/storage/DIYTS9YB/Hu et al. - 2020 - On Batch-size Selection for Stochastic Training fo.pdf}
+}
+
+@misc{kipfSemiSupervisedClassificationGraph2017,
+  title = {Semi-{{Supervised Classification}} with {{Graph Convolutional Networks}}},
+  author = {Kipf, Thomas N. and Welling, Max},
+  year = {2017},
+  month = feb,
+  number = {arXiv:1609.02907},
+  eprint = {1609.02907},
+  primaryclass = {cs, stat},
+  publisher = {{arXiv}},
+  doi = {10.48550/arXiv.1609.02907},
+  urldate = {2023-09-07},
+  abstract = {We present a scalable approach for semi-supervised learning on graph-structured data that is based on an efficient variant of convolutional neural networks which operate directly on graphs. We motivate the choice of our convolutional architecture via a localized first-order approximation of spectral graph convolutions. Our model scales linearly in the number of graph edges and learns hidden layer representations that encode both local graph structure and features of nodes. In a number of experiments on citation networks and on a knowledge graph dataset we demonstrate that our approach outperforms related methods by a significant margin.},
+  archiveprefix = {arxiv},
+  keywords = {Computer Science - Machine Learning,Statistics - Machine Learning},
+  file = {/Users/mryodo/Zotero/storage/32XPIKP8/Kipf and Welling - 2017 - Semi-Supervised Classification with Graph Convolut.pdf;/Users/mryodo/Zotero/storage/DLXVXYVH/1609.html}
+}
+
+@misc{limHodgeLaplaciansGraphs2019,
+  title = {Hodge {{Laplacians}} on Graphs},
+  author = {Lim, Lek-Heng},
+  year = {2019},
+  month = aug,
+  number = {arXiv:1507.05379},
+  eprint = {1507.05379},
+  primaryclass = {cs, math},
+  publisher = {{arXiv}},
+  doi = {10.48550/arXiv.1507.05379},
+  urldate = {2023-08-15},
+  abstract = {This is an elementary introduction to the Hodge Laplacian on a graph, a higher-order generalization of the graph Laplacian. We will discuss basic properties including cohomology and Hodge theory. The main feature of our approach is simplicity, requiring only knowledge of linear algebra and graph theory. We have also isolated the algebra from the topology to show that a large part of cohomology and Hodge theory is nothing more than the linear algebra of matrices satisfying \$AB = 0\$. For the remaining topological aspect, we cast our discussions entirely in terms of graphs as opposed to less-familiar topological objects like simplicial complexes.},
+  archiveprefix = {arxiv},
+  keywords = {{05C50, 58A14, 20G10},Computer Science - Information Theory},
+  file = {/Users/mryodo/Zotero/storage/8J2QRJM4/Lim - 2019 - Hodge Laplacians on graphs.pdf;/Users/mryodo/Zotero/storage/KDQX2MS4/1507.html}
+}
+
+@misc{yangConvolutionalLearningSimplicial2023,
+  title = {Convolutional {{Learning}} on {{Simplicial Complexes}}},
+  author = {Yang, Maosheng and Isufi, Elvin},
+  year = {2023},
+  month = jan,
+  number = {arXiv:2301.11163},
+  eprint = {2301.11163},
+  primaryclass = {cs},
+  publisher = {{arXiv}},
+  urldate = {2023-08-15},
+  abstract = {We propose a simplicial complex convolutional neural network (SCCNN) to learn data representations on simplicial complexes. It performs convolutions based on the multi-hop simplicial adjacencies via common faces and cofaces independently and captures the inter-simplicial couplings, generalizing state-of-the-art. Upon studying symmetries of the simplicial domain and the data space, it is shown to be permutation and orientation equivariant, thus, incorporating such inductive biases. Based on the Hodge theory, we perform a spectral analysis to understand how SCCNNs regulate data in different frequencies, showing that the convolutions via faces and cofaces operate in two orthogonal data spaces. Lastly, we study the stability of SCCNNs to domain deformations and examine the effects of various factors. Empirical results show the benefits of higher-order convolutions and inter-simplicial couplings in simplex prediction and trajectory prediction.},
+  archiveprefix = {arxiv},
+  keywords = {Computer Science - Machine Learning},
+  file = {/Users/mryodo/Zotero/storage/B2CFKXNQ/Yang and Isufi - 2023 - Convolutional Learning on Simplicial Complexes.pdf;/Users/mryodo/Zotero/storage/MEUKSD9X/2301.html}
+}

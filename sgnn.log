@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.6.17)  4 SEP 2023 20:46
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.6.17)  7 SEP 2023 12:05
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1153,12 +1153,16 @@ Package hyperref Info: bookmark level for unknown todo defaults to 0 on input li
  [1
 
 {/usr/local/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+Package hyperref Info: bookmark level for unknown definition defaults to 0 on input line 120.
+Package hyperref Info: bookmark level for unknown problem defaults to 0 on input line 133.
+ [2]
+Package hyperref Info: bookmark level for unknown remark defaults to 0 on input line 140.
 
-LaTeX Warning: Marginpar on page 2 moved.
 
-Package hyperref Info: bookmark level for unknown problem defaults to 0 on input line 116.
-Package hyperref Info: bookmark level for unknown remark defaults to 0 on input line 123.
-[2] (./sgnn.bbl) [3] (./sgnn.aux)
+LaTeX Font Warning: Font shape `OT1/cmtl/l/n' undefined
+(Font)              using `OT1/cmtl/m/n' instead on input line 141.
+
+(./sgnn.bbl) [3] (./sgnn.aux)
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
@@ -1166,18 +1170,18 @@ Package rerunfilecheck Info: File `sgnn.out' has not changed.
 (rerunfilecheck)             Checksum: 775849BAFE5167D1BB6DC1E0C61E88B0;178.
  ) 
 Here is how much of TeX's memory you used:
- 47921 strings out of 478268
- 1120497 string characters out of 5846347
- 1654294 words of memory out of 5000000
- 65268 multiletter control sequences out of 15000+600000
- 480595 words of font info for 71 fonts, out of 8000000 for 9000
+ 47941 strings out of 478268
+ 1120935 string characters out of 5846347
+ 1661438 words of memory out of 5000000
+ 65283 multiletter control sequences out of 15000+600000
+ 480763 words of font info for 72 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  114i,16n,118p,822b,994s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/doublestroke/dsrom10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/hfbright/hfbr10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/hfbright/hfbr8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/hfbright/hfbr9.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/hfbright/hfbrbs10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/hfbright/hfbrbx10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/hfbright/hfbrmi10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/hfbright/hfbrmi8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/hfbright/hfbrsy10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/hfbright/hfbrsy8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/hfbright/hftl10.pfb>
-Output written on sgnn.pdf (3 pages, 149060 bytes).
+Output written on sgnn.pdf (3 pages, 154647 bytes).
 PDF statistics:
- 125 PDF objects out of 1000 (max. 8388607)
- 95 compressed objects within 1 object stream
- 30 named destinations out of 1000 (max. 500000)
+ 134 PDF objects out of 1000 (max. 8388607)
+ 103 compressed objects within 2 object streams
+ 35 named destinations out of 1000 (max. 500000)
  29 words of extra memory for PDF output out of 10000 (max. 10000000)
 
