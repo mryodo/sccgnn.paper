@@ -1193,4 +1193,6 @@ Output written on sgnn.pdf (6 pages, 271065 bytes).
 PDF statistics:
  250 PDF objects out of 1000 (max. 8388607)
  203 compressed objects within 3 object streams
- 54 named destinations out of 1000 (max. 500
+ 54 named destinations out of 1000 (max. 500000)
+ 75 words of extra memory for PDF output out of 10000 (max. 10000000)
+
