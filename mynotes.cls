@@ -489,7 +489,7 @@
 % ================================= %
 
 
-\renewcommand{\labelitemi}{$\diamondsuit$}
+\renewcommand{\labelitemi}{$\color{persimmon}\diamondsuit$}
 \usepackage{enumitem}
 \setlength\itemsep{-1.5em}
 \setitemize{itemsep=3pt,topsep=3pt}

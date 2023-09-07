@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.6.17)  7 SEP 2023 12:05
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.6.17)  7 SEP 2023 19:19
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1162,7 +1162,7 @@ Package hyperref Info: bookmark level for unknown remark defaults to 0 on input 
 LaTeX Font Warning: Font shape `OT1/cmtl/l/n' undefined
 (Font)              using `OT1/cmtl/m/n' instead on input line 141.
 
-(./sgnn.bbl) [3] (./sgnn.aux)
+[3] (./sgnn.bbl) [4] (./sgnn.aux)
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
@@ -1170,18 +1170,18 @@ Package rerunfilecheck Info: File `sgnn.out' has not changed.
 (rerunfilecheck)             Checksum: 775849BAFE5167D1BB6DC1E0C61E88B0;178.
  ) 
 Here is how much of TeX's memory you used:
- 47941 strings out of 478268
- 1120935 string characters out of 5846347
- 1661438 words of memory out of 5000000
- 65283 multiletter control sequences out of 15000+600000
- 480763 words of font info for 72 fonts, out of 8000000 for 9000
+ 47950 strings out of 478268
+ 1121061 string characters out of 5846347
+ 1661450 words of memory out of 5000000
+ 65285 multiletter control sequences out of 15000+600000
+ 480931 words of font info for 73 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  114i,16n,118p,822b,994s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/doublestroke/dsrom10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/hfbright/hfbr10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/hfbright/hfbr8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/hfbright/hfbr9.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/hfbright/hfbrbs10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/hfbright/hfbrbx10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/hfbright/hfbrmi10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/hfbright/hfbrmi8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/hfbright/hfbrsy10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/hfbright/hfbrsy8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/hfbright/hftl10.pfb>
-Output written on sgnn.pdf (3 pages, 154647 bytes).
+Output written on sgnn.pdf (4 pages, 164078 bytes).
 PDF statistics:
- 134 PDF objects out of 1000 (max. 8388607)
- 103 compressed objects within 2 object streams
- 35 named destinations out of 1000 (max. 500000)
+ 147 PDF objects out of 1000 (max. 8388607)
+ 115 compressed objects within 2 object streams
+ 42 named destinations out of 1000 (max. 500000)
  29 words of extra memory for PDF output out of 10000 (max. 10000000)
 
